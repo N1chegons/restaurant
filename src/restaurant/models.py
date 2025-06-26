@@ -1,6 +1,7 @@
 import enum
 from datetime import time, date
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.database import Base
@@ -19,16 +20,22 @@ class NumberTable(str, enum.Enum):
     seventh = "7"
 
 
-
-
-class Booking(Base):
-    __tablename__ = "booking"
+class Table(Base):
+    __tablename__ = "tables"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     number: Mapped[NumberTable]
+    category: Mapped[Category]
+    is_booked: Mapped[bool] = mapped_column(default=False)
+
+
+
+class Booking(Base):
+    __tablename__ = "bookings"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    table_id: Mapped[int] = mapped_column(ForeignKey("tables.id"), index=True)
     start_time: Mapped[time]
     end_time: Mapped[time]
     guest_name: Mapped[str]
-    category: Mapped[Category]
     booking_date: Mapped[date]
-    is_booked: Mapped[bool] = mapped_column(default=False)
