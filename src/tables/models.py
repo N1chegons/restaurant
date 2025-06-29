@@ -2,29 +2,20 @@ import enum
 from datetime import time, date
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from src.auth import models
 from src.database import Base
 
-class Category(enum.Enum):
+class Category(str, enum.Enum):
     basic = "basic"
     VIP = "VIP"
-
-class NumberTable(str, enum.Enum):
-    first = "1"
-    second = "2"
-    third = "3"
-    fourth = "4"
-    fifth = "5"
-    sixth = "6"
-    seventh = "7"
 
 
 class Table(Base):
     __tablename__ = "tables"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    number: Mapped[NumberTable]
     category: Mapped[Category]
     is_booked: Mapped[bool] = mapped_column(default=False)
 
@@ -39,3 +30,8 @@ class Booking(Base):
     end_time: Mapped[time]
     guest_name: Mapped[str]
     booking_date: Mapped[date]
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+
+    booked_table: Mapped["models.User"] = relationship(
+        back_populates="notes"
+    )

@@ -3,7 +3,7 @@ import datetime
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from pydantic import EmailStr
 from sqlalchemy import text
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.testing.schema import mapped_column
 
 from src.database import Base
@@ -24,3 +24,10 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     is_superuser: Mapped[bool] = mapped_column(default=False, nullable=False)
     is_verified: Mapped[bool] = mapped_column(default=True, nullable=False)
     is_blocked: Mapped[bool] = mapped_column(default=False, nullable=False)
+
+    booked_table: Mapped[list["Booking"]] = relationship(
+        back_populates="user_id",
+        lazy="joined",
+    )
+
+from src.tables.models import Booking

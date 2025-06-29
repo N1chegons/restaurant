@@ -8,7 +8,7 @@ from alembic import context
 from src.config import settings
 from src.database import Base
 from src.auth.models import User
-from src.restaurant.models import Booking
+from src.tables.models import Booking
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
