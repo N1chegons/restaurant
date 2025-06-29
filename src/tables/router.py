@@ -10,11 +10,12 @@ router = APIRouter(
 )
 
 @router.get("/get_free_tables/", summary="Get all free tables")
-async def get_tables(user: User = Depends(cur_user)):
-    table_list = await TableRepository.get_free_tables_list(user)
+async def get_tables():
+    table_list = await TableRepository.get_free_tables_list()
     return table_list
 
 @router.get("/get_booked_tables/", summary="Get all booked tables")
-async def get_booked_tables(user: User = Depends(cur_user)):
-    table_list = await TableRepository.get_booked_tables_list(user)
+async def get_booked_tables():
+    table_list = await TableRepository.get_booked_tables_list()
     return table_list
+

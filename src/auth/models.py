@@ -26,7 +26,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     is_blocked: Mapped[bool] = mapped_column(default=False, nullable=False)
 
     booked_table: Mapped[list["Booking"]] = relationship(
-        back_populates="user_id",
+        back_populates="booked_man",
         lazy="joined",
     )
 

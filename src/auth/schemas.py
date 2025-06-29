@@ -1,6 +1,10 @@
 import datetime
+from typing import List
+
 from fastapi_users import schemas
 from pydantic import EmailStr, field_validator, BaseModel, ConfigDict
+
+from src.tables.schemas import BookedView
 
 
 class ProfileRead(BaseModel):
@@ -8,9 +12,11 @@ class ProfileRead(BaseModel):
     username: str
     email: EmailStr
     registered_at: datetime.datetime
+    booked_table: list[BookedView]
+
 
     @field_validator('registered_at')
-    def custom(cls, v):
+    def custom(cls, v: datetime):
         return datetime.datetime.strftime(v, "%m.%d.%Y")
 
     model_config = ConfigDict(from_attributes=True)

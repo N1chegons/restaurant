@@ -30,8 +30,8 @@ class Booking(Base):
     end_time: Mapped[time]
     guest_name: Mapped[str]
     booking_date: Mapped[date]
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), on_delete=True)
 
-    booked_table: Mapped["models.User"] = relationship(
-        back_populates="notes"
+    booked_man: Mapped["models.User"] = relationship(
+        back_populates="booked_table"
     )
